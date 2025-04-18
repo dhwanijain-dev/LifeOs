@@ -8,6 +8,20 @@ import AppIcon from "@/components/app-icon"
 import { X, Minus, Maximize2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+// Define types for App and AppWindowProps
+interface App {
+  id: string
+  name: string
+  icon: React.ReactNode
+  color: string
+  content: React.ReactNode
+}
+
+interface AppWindowProps {
+  app: App
+  onClose: () => void
+}
+
 export default function DesktopLayout() {
   const { apps, openApp, closeApp, openApps } = useAppContext()
 
@@ -15,14 +29,14 @@ export default function DesktopLayout() {
     <div className="pt-12 w-full h-full">
       {/* Desktop Icons */}
       <div className="grid grid-cols-6 gap-4 p-6">
-        {apps.map((app) => (
+        {apps.map((app: App) => (
           <AppIcon key={app.id} icon={app.icon} name={app.name} onClick={() => openApp(app.id)} />
         ))}
       </div>
 
       {/* App Windows */}
       <AnimatePresence>
-        {openApps.map((app) => (
+        {openApps.map((app: App) => (
           <AppWindow key={app.id} app={app} onClose={() => closeApp(app.id)} />
         ))}
       </AnimatePresence>
@@ -30,9 +44,9 @@ export default function DesktopLayout() {
   )
 }
 
-function AppWindow({ app, onClose }) {
-  const [isMinimized, setIsMinimized] = useState(false)
-  const [isMaximized, setIsMaximized] = useState(false)
+function AppWindow({ app, onClose }: AppWindowProps) {
+  const [isMinimized, setIsMinimized] = useState<boolean>(false)
+  const [isMaximized, setIsMaximized] = useState<boolean>(false)
 
   const handleMaximize = () => {
     setIsMaximized(!isMaximized)

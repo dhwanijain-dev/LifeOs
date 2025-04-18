@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export default function SystemBar() {
   const { theme, setTheme } = useTheme()
   const [time, setTime] = useState(new Date())
-  const [weather, setWeather] = useState<{
+  const [weather] = useState<{
     temp: number
     condition: "sunny" | "cloudy" | "rainy" | "snowy" | "stormy"
   }>({ temp: 72, condition: "sunny" })

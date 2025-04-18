@@ -1,19 +1,30 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
+import { motion, AnimatePresence, useMotionValue, PanInfo } from "framer-motion"
 import { useAppContext } from "@/components/app-provider"
 import AppIcon from "@/components/app-icon"
 import { X, ChevronDown } from "lucide-react"
+
+interface App {
+  id: string
+  name: string
+  icon: React.ReactNode
+  color: string
+  content: React.ReactNode
+}
+
+interface AppScreenProps {
+  app: App
+  onClose: () => void
+}
 
 export default function MobileLayout() {
   const { apps, openApp, closeApp, openApps } = useAppContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const dragY = useMotionValue(0)
-  const dragOpacity = useTransform(dragY, [0, -100], [0, 1])
-  const dragScale = useTransform(dragY, [0, -100], [0.9, 1])
 
-  const handleDragEnd = (_, info) => {
+  const handleDragEnd = (_: PointerEvent, info: PanInfo) => {
     if (info.offset.y < -50) {
       setIsDrawerOpen(true)
     } else {
@@ -23,9 +34,7 @@ export default function MobileLayout() {
 
   return (
     <div className="pt-12 w-full h-full">
-      {/* Home Screen */}
       <div className="w-full h-full flex flex-col">
-        {/* Current App */}
         {openApps.length > 0 ? (
           <AppScreen app={openApps[openApps.length - 1]} onClose={() => closeApp(openApps[openApps.length - 1].id)} />
         ) : (
@@ -39,7 +48,6 @@ export default function MobileLayout() {
           </div>
         )}
 
-        {/* App Drawer Handle */}
         <motion.div
           drag="y"
           dragConstraints={{ top: 0, bottom: 0 }}
@@ -52,7 +60,6 @@ export default function MobileLayout() {
         </motion.div>
       </div>
 
-      {/* App Drawer */}
       <AnimatePresence>
         {isDrawerOpen && (
           <motion.div
@@ -75,7 +82,7 @@ export default function MobileLayout() {
 
               <div className="flex-1 p-4 overflow-auto">
                 <div className="grid grid-cols-4 gap-6">
-                  {apps.map((app) => (
+                  {apps.map((app: App) => (
                     <AppIcon
                       key={app.id}
                       icon={app.icon}
@@ -96,7 +103,7 @@ export default function MobileLayout() {
   )
 }
 
-function AppScreen({ app, onClose }) {
+function AppScreen({ app, onClose }: AppScreenProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -105,7 +112,6 @@ function AppScreen({ app, onClose }) {
       transition={{ duration: 0.2 }}
       className="flex-1 flex flex-col"
     >
-      {/* App Header */}
       <div className="h-12 flex items-center justify-between px-4 bg-white/20 dark:bg-black/20">
         <div className="flex items-center space-x-2">
           <span className={`h-3 w-3 rounded-full bg-${app.color}-500`}></span>
@@ -116,7 +122,6 @@ function AppScreen({ app, onClose }) {
         </button>
       </div>
 
-      {/* App Content */}
       <div className="flex-1 p-4 overflow-auto">{app.content}</div>
     </motion.div>
   )
