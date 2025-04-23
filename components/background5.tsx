@@ -156,8 +156,7 @@ export default function Aurora(props: AuroraProps) {
 
         const geometry = new Triangle(gl);
         if (geometry.attributes.uv) {
-            // TypeScript may require a type assertion here.
-            delete (geometry.attributes as any).uv;
+            delete (geometry.attributes as Record<string, unknown>).uv;
         }
 
         const colorStopsArray = colorStops.map((hex) => {
@@ -208,7 +207,7 @@ export default function Aurora(props: AuroraProps) {
             }
             gl.getExtension("WEBGL_lose_context")?.loseContext();
         };
-    }, [amplitude]);
+    }, [amplitude, blend, colorStops]);
 
     return <div ref={ctnDom} className="w-full h-full" />;
 }

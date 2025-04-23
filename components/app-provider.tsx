@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock, Image } from "lucide-react"
+import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock,  FileImage } from "lucide-react"
 import { WeeklyActivityChart } from "./charts/weekly-activity-chart"
 import { AppUsageChart } from "./charts/app-usage-chart"
 import { ScreenTimeChart } from "./charts/screen-time-chart"
@@ -274,7 +274,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     {
       id: "wallpaper",
       name: "Wallpaper",
-      icon: <Image className="h-6 w-6 text-cyan-500" />,
+      icon: <FileImage className="h-6 w-6 text-cyan-500" />,
       color: "cyan",
       content: (
         <div className="h-full flex flex-col items-center justify-center">
