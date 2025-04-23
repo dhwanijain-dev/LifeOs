@@ -1,8 +1,11 @@
 "use client"
 
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock } from "lucide-react"
-
+import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock, Image } from "lucide-react"
+import { WeeklyActivityChart } from "./charts/weekly-activity-chart"
+import { AppUsageChart } from "./charts/app-usage-chart"
+import { ScreenTimeChart } from "./charts/screen-time-chart"
+ 
 // Define app types
 interface App {
   id: string
@@ -10,6 +13,7 @@ interface App {
   icon: ReactNode
   color: string
   content: ReactNode
+  
 }
 
 // Create context
@@ -18,12 +22,19 @@ interface AppContextType {
   openApps: App[]
   openApp: (id: string) => void
   closeApp: (id: string) => void
+  wallpaper: string // Wallpaper state
+  setWallpaper: (wallpaper: string) => void // Function to update wallpaper
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
 export function AppProvider({ children }: { children: ReactNode }) {
   // Define apps
+
+ 
+
+  
+  const [wallpaper, setWallpaper] = useState<string>("default");
   const appsList: App[] = [
     {
       id: "calendar",
@@ -70,16 +81,60 @@ export function AppProvider({ children }: { children: ReactNode }) {
       color: "purple",
       content: (
         <div className="h-full flex flex-col">
-          <h2 className="text-xl font-bold mb-4">Analytics</h2>
-          <div className="flex-1 flex items-center justify-center">
-            <div className="w-full h-48 flex space-x-2 items-end">
-              {[65, 40, 85, 30, 55, 60, 75].map((height, index) => (
-                <div
-                  key={index}
-                  className="flex-1 bg-gradient-to-t from-purple-500 to-cyan-500 rounded-t-lg"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
+          <h2 className="text-xl font-bold mb-4">Analytics Dashboard</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="p-4 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Daily Screen Time</h3>
+              <div className="text-2xl font-bold">6h 42m</div>
+              <div className="text-xs text-green-500 font-medium mt-1">↓ 12% from yesterday</div>
+              <div className="h-32 mt-2">
+                <ScreenTimeChart />
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">App Usage</h3>
+              <div className="text-2xl font-bold">12 apps</div>
+              <div className="text-xs text-purple-500 font-medium mt-1">Most used: Notes</div>
+              <div className="h-32 mt-2">
+                <AppUsageChart />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm overflow-hidden">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-medium">Weekly Activity</h3>
+              <select className="text-xs bg-white/50 dark:bg-gray-700/50 rounded-md border-0 p-1">
+                <option>Last 7 days</option>
+                <option>Last 30 days</option>
+                <option>Last 90 days</option>
+              </select>
+            </div>
+            <div className="h-48">
+              <WeeklyActivityChart />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+            <div className="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400">Notifications</h3>
+              <div className="text-xl font-bold mt-1">247</div>
+              <div className="text-xs text-red-500 mt-1">↑ 24%</div>
+            </div>
+            <div className="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400">Focus Time</h3>
+              <div className="text-xl font-bold mt-1">3h 12m</div>
+              <div className="text-xs text-green-500 mt-1">↑ 18%</div>
+            </div>
+            <div className="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400">Pickups</h3>
+              <div className="text-xl font-bold mt-1">52</div>
+              <div className="text-xs text-green-500 mt-1">↓ 8%</div>
+            </div>
+            <div className="p-3 rounded-xl bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-white/10 shadow-sm">
+              <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400">Productivity</h3>
+              <div className="text-xl font-bold mt-1">87%</div>
+              <div className="text-xs text-green-500 mt-1">↑ 5%</div>
             </div>
           </div>
         </div>
@@ -216,6 +271,28 @@ export function AppProvider({ children }: { children: ReactNode }) {
         </div>
       ),
     },
+    {
+      id: "wallpaper",
+      name: "Wallpaper",
+      icon: <Image className="h-6 w-6 text-cyan-500" />,
+      color: "cyan",
+      content: (
+        <div className="h-full flex flex-col items-center justify-center">
+          <h2 className="text-xl font-bold mb-4">Choose a Wallpaper</h2>
+          <div className="grid grid-cols-3 gap-4">
+            {["default", "shader1", "shader2", "shader3","shader4","shader5"].map((shader) => (
+              <div
+                key={shader}
+                className="w-24 h-24 rounded-lg cursor-pointer bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-cyan-500"
+                onClick={() => setWallpaper(shader)}
+              >
+                <span className="text-sm font-medium capitalize">{shader}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
   ]
 
   const [openApps, setOpenApps] = useState<App[]>([])
@@ -238,7 +315,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setOpenApps((prev) => prev.filter((app) => app.id !== id))
   }
 
-  return <AppContext.Provider value={{ apps: appsList, openApps, openApp, closeApp }}>{children}</AppContext.Provider>
+  return (
+    <AppContext.Provider
+      value={{ apps: appsList, openApps, wallpaper, setWallpaper, openApp, closeApp   }}
+    >
+      {children}
+    </AppContext.Provider>
+  ); 
 }
 
 export function useAppContext() {

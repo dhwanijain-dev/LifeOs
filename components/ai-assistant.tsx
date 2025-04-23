@@ -59,7 +59,7 @@ export default function AIAssistant() {
         whileTap={{ scale: 0.9 }}
         onClick={toggleOpen}
         className={cn(
-          "fixed bottom-6 right-6 z-40 p-3 rounded-full",
+          "fixed bottom-14 right-6 z-40 p-3 rounded-full",
           "bg-gradient-to-r from-purple-500 to-cyan-500",
           "shadow-lg shadow-purple-500/20",
           "text-white",

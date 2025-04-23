@@ -43,7 +43,7 @@ export default function SystemBar() {
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 h-12 px-4 flex items-center justify-between backdrop-blur-md bg-white/10 dark:bg-black/20 border-b border-white/10 dark:border-white/5"
+      className="fixed top-0 md:bottom-0 md:top-auto left-0 right-0 z-50 h-12 px-4 flex items-center justify-between backdrop-blur-md bg-white/10 dark:bg-black/20 border-b border-white/10 dark:border-white/5"
     >
       <div className="flex items-center space-x-4">
         <motion.div
@@ -74,7 +74,7 @@ export default function SystemBar() {
         <motion.div whileHover={{ scale: 1.1 }}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1 rounded-full hover:bg-white/10 dark:hover:bg-black/20">
+              <button className="p-1 rounded-full hover:bg-white/10  dark:hover:bg-black/20">
                 <Bell className="h-5 w-5" />
               </button>
             </DropdownMenuTrigger>
@@ -119,7 +119,7 @@ export default function SystemBar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-56 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border border-white/20"
+              className="w-56 backdrop-blur-md bg-white/80 dark:text-white   dark:bg-gray-900/80 border border-white/20"
             >
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuItem>Account</DropdownMenuItem>

@@ -26,9 +26,9 @@ export default function DesktopLayout() {
   const { apps, openApp, closeApp, openApps } = useAppContext()
 
   return (
-    <div className="pt-12 w-full h-full">
+    <div className="pt-2 w-full h-full">
       {/* Desktop Icons */}
-      <div className="grid grid-cols-6 gap-4 p-6">
+      <div className="flex flex-wrap flex-col w-10 px-5  h-screen items-start gap-4">
         {apps.map((app: App) => (
           <AppIcon key={app.id} icon={app.icon} name={app.name} onClick={() => openApp(app.id)} />
         ))}
