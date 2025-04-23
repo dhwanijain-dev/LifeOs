@@ -40,7 +40,7 @@ export function ScreenTimeChart() {
         <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
         <Tooltip
           content={({ active, payload }) => {
-            if (active && payload && payload.length) {
+            if (active && payload && payload.length && payload[0]?.payload) {
               return (
                 <div className="rounded-lg border bg-background p-2 shadow-sm">
                   <div className="grid grid-cols-2 gap-2">
@@ -50,7 +50,7 @@ export function ScreenTimeChart() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[0.70rem] uppercase text-muted-foreground">Hours</span>
-                      <span className="font-bold text-xs">{payload[0].value.toFixed(1)}h</span>
+                      <span className="font-bold text-xs">{(payload[0].value as number)?.toFixed(1)}h</span>
                     </div>
                   </div>
                 </div>
