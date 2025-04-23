@@ -10,8 +10,7 @@ import AIAssistant from "@/components/ai-assistant"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AppProvider } from "@/components/app-provider"
 import BackgroundShader from "@/components/background-shader"
-import ClickSpark from "@/components/clickspark"
-
+import ClickSpark from "@/components/ClickSpark"
 export default function Home() {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [mounted, setMounted] = useState(false)
