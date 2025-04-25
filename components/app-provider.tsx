@@ -1,10 +1,11 @@
 "use client"
 
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock,  FileImage } from "lucide-react"
+import { Calendar, FileText, BarChart3, Settings, Music, ImageIcon, Mail, Clock,  FileImage, Terminal } from "lucide-react"
 import { WeeklyActivityChart } from "./charts/weekly-activity-chart"
 import { AppUsageChart } from "./charts/app-usage-chart"
 import { ScreenTimeChart } from "./charts/screen-time-chart"
+ 
  
 // Define app types
 interface App {
@@ -293,6 +294,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         </div>
       ),
     },
+    
   ]
 
   const [openApps, setOpenApps] = useState<App[]>([])

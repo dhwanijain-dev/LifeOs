@@ -9,14 +9,19 @@ export default function BackgroundShader() {
   const { wallpaper } = useAppContext();
 
   const shaderStyles = {
-    default: <Ballpit
+    default:<Threads
+        amplitude={1}
+        distance={0}
+        enableMouseInteraction={true}
+      /> ,
+    shader1: <Ballpit
       count={100}
       gravity={1}
       friction={0.8}
       wallBounce={0.95}
       followCursor={false}
+      ambientColor={16777215}
     />,
-    shader1: <Hyperspeed/>,
     shader2: <LetterGlitch
       glitchSpeed={50}  
       glitchColors={["#2b4539", "#61dca3", "#61b3dc"]}
@@ -36,21 +41,14 @@ export default function BackgroundShader() {
       amplitude={1.0}
       speed={0.5}
     />,
-    shader5:
-      <Threads
-        amplitude={1}
-        distance={0}
-        enableMouseInteraction={true}
-      />,
+    shader5: <Hyperspeed /> 
+      ,
   };
 
   return (
-    // <div
-    //   className={`absolute inset-0 transition-all duration-500 ${shaderStyles[wallpaper as keyof typeof shaderStyles] || shaderStyles.default
-    //     }`}
-    // />
+ 
     <div className="absolute inset-0 transition-all duration-500">
-      {/* <Hyperspeed/> */}
+       
       {shaderStyles[wallpaper as keyof typeof shaderStyles] || shaderStyles.default}
     </div>
   );
